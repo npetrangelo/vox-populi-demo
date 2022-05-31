@@ -8,6 +8,7 @@ function App() {
   return (
     <div className="App">
       <ResultsViewer />
+      <VotingStation voter="Alice"/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

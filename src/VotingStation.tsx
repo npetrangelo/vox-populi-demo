@@ -1,23 +1,39 @@
 import React from 'react';
 import {BallotBox, GlobalConsensus} from "vox-populi";
+import {Form} from "react-bootstrap";
 
 class VotingStation extends React.Component<any, any> {
+    voter: string
+    ballotBox: BallotBox<string>
     constructor(props: any) {
         super(props);
-        let strategy = new GlobalConsensus<string>(0.75);
-        this.state = {
-            strategy: strategy,
-            ballotBox: new BallotBox<string>(5, strategy),
-        };
-        this.state.ballotBox.placeVote("Alice", "Bob");
-        this.state.ballotBox.placeVote("Bob", "Bob");
-        this.state.ballotBox.placeVote("Charles", "Bob");
-        this.state.ballotBox.placeVote("Dan", "Bob");
-        this.state.ballotBox.placeVote("Evan", "Bob");
+        this.voter = props.voter;
+        let strategy = new GlobalConsensus<string>(0.5);
+        this.ballotBox = new BallotBox<string>(3, strategy);
+        this.state = {selected: null};
+        this.ballotBox.placeVote("Alice", "b");
+        this.ballotBox.placeVote("Bob", "b");
+        this.ballotBox.placeVote("Charles", "b");
+    }
+
+    handleInputChange = (event: any) => {
+        let vote = event.target.value;
+        console.log(vote);
+        this.setState({
+            selected: vote
+        });
+        this.ballotBox.placeVote(this.voter, vote);
     }
 
     render() {
-        return <h1>{this.state.ballotBox.getWinner()}</h1>;
+        return (
+            <Form.Select onChange={this.handleInputChange}>
+                <option>Open this select menu</option>
+                <option value="a">Alice</option>
+                <option value="b">Bob</option>
+                <option value="c">Charles</option>
+            </Form.Select>
+        );
     }
 }
 
