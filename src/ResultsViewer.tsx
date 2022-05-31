@@ -16,7 +16,7 @@ class ResultsViewer extends React.Component<any, any> {
     }
 
     render() {
-        let entries: Array<string> = this.state.ballotBox.histogram.topN(3);
+        let entries: Array<string> = this.state.ballotBox.histogram.topN();
         return (
             <div>
                 {entries.map(([key, value]) => <h1>{key}: {value}</h1>)}
