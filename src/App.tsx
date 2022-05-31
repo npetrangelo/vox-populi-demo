@@ -2,11 +2,12 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import VotingStation from "./VotingStation";
+import ResultsViewer from "./ResultsViewer";
 
 function App() {
   return (
     <div className="App">
-      <VotingStation />
+      <ResultsViewer />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
