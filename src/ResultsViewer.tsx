@@ -1,25 +1,29 @@
 import React from "react";
-import {BallotBox, GlobalConsensus} from "vox-populi";
+import {BallotBox} from "vox-populi";
 
-class ResultsViewer extends React.Component<any, any> {
+interface ResultsViewerState {
+    entries: Array<[string, number]>
+}
+
+class ResultsViewer extends React.Component<any, ResultsViewerState> {
+    ballotBox: BallotBox<string>
     constructor(props: any) {
         super(props);
 
-        let strategy = new GlobalConsensus<string>(0.5);
-        this.state = {
-            strategy: strategy,
-            ballotBox: new BallotBox<string>(3, strategy),
-        };
-        this.state.ballotBox.placeVote("Alice", "Bob");
-        this.state.ballotBox.placeVote("Bob", "Bob");
-        this.state.ballotBox.placeVote("Charles", "Alice");
+        this.ballotBox = props.ballotBox;
+        this.state = {entries: []}
+    }
+
+    update = () => {
+        this.setState({
+            entries: this.ballotBox.histogram.topN(),
+        });
     }
 
     render() {
-        let entries: Array<string> = this.state.ballotBox.histogram.topN();
         return (
             <div>
-                {entries.map(([key, value]) => <h1>{key}: {value}</h1>)}
+                {this.state.entries.map(([key, value]) => <h1 key={key}>{key}: {value}</h1>)}
             </div>
         );
     }

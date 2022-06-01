@@ -1,19 +1,17 @@
 import React from 'react';
-import {BallotBox, GlobalConsensus} from "vox-populi";
+import {BallotBox} from "vox-populi";
 import {Form} from "react-bootstrap";
 
 class VotingStation extends React.Component<any, any> {
     voter: string
     ballotBox: BallotBox<string>
+    merge: Function
     constructor(props: any) {
         super(props);
         this.voter = props.voter;
-        let strategy = new GlobalConsensus<string>(0.5);
-        this.ballotBox = new BallotBox<string>(3, strategy);
+        this.ballotBox = props.ballotBox;
+        this.merge = props.merge;
         this.state = {selected: null};
-        this.ballotBox.placeVote("Alice", "b");
-        this.ballotBox.placeVote("Bob", "b");
-        this.ballotBox.placeVote("Charles", "b");
     }
 
     handleInputChange = (event: any) => {
@@ -23,15 +21,16 @@ class VotingStation extends React.Component<any, any> {
             selected: vote
         });
         this.ballotBox.placeVote(this.voter, vote);
+        this.merge();
     }
 
     render() {
         return (
             <Form.Select onChange={this.handleInputChange}>
-                <option>Open this select menu</option>
-                <option value="a">Alice</option>
-                <option value="b">Bob</option>
-                <option value="c">Charles</option>
+                <option>Place your vote</option>
+                <option value="Alice">Alice</option>
+                <option value="Bob">Bob</option>
+                <option value="Charles">Charles</option>
             </Form.Select>
         );
     }
