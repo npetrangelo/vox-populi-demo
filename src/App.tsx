@@ -4,7 +4,7 @@ import './App.css';
 import Row from 'react-bootstrap/Row';
 import VotingStation from "./VotingStation";
 import ResultsViewer from "./ResultsViewer";
-import {BallotBox, GlobalConsensus} from "vox-populi";
+import {BallotBox, Consensus} from "vox-populi";
 
 class App extends React.Component<any, any> {
     resultsBox: BallotBox<string>
@@ -14,7 +14,7 @@ class App extends React.Component<any, any> {
     resultsBoxElement: RefObject<ResultsViewer>
     constructor(props: any) {
         super(props);
-        let strategy = new GlobalConsensus<string>(0.5);
+        let strategy = new Consensus<string>(0.5);
         this.resultsBox = new BallotBox<string>(3, strategy);
         this.aliceBox = new BallotBox<string>(3, strategy);
         this.bobBox = new BallotBox<string>(3, strategy);
